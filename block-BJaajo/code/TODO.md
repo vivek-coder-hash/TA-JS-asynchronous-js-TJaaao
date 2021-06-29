@@ -7,7 +7,9 @@ console.log('First');
 setTimeout(() => console.log('Second'), 0);
 console.log('Third');
 ```
-
+// first
+// Third
+// Second
 2.
 
 ```js
@@ -20,6 +22,11 @@ setTimeout(() => console.log('Third'), 0); // execute this code after 1000 ms
 console.log('Third');
 ```
 
+//First
+// Third
+// Third
+// Second
+
 3.
 
 ```js
@@ -31,6 +38,10 @@ setTimeout(secondCall, 1000); // execute this code after 1000 ms
 setTimeout(() => console.log('Third'), 0);
 console.log('Fourth');
 ```
+// First
+// Fourth
+// Third
+// second
 
 4.
 
@@ -43,6 +54,10 @@ setTimeout(secondCall, 1000); // execute this code after 1000 ms
 setTimeout(() => console.log('Third'), 0);
 console.log('Fourth');
 ```
+// First
+// Fourth
+// Third
+// second
 
 5. What will be the output of the code below and why? Also write the timing of the output starting with 0 ms.
 
@@ -61,6 +76,11 @@ setTimeout(function exec() {
 runWhileLoopForNSeconds(3);
 console.log('Third');
 ```
+// First 0ms
+// Third // 5ms
+// runWhileLoopForSeconds  function execute  will be take three second 3000ms
+// Second 1000ms because SetTimeOut browser API so it is execute in last
+
 
 6. Convert the synchronous code given below into asynchronous. If you execute this code it will print one, two and three. Change the code in such a way that it should print `one`, `three` and `two`. You are not allowed to move the code up and down.
 
