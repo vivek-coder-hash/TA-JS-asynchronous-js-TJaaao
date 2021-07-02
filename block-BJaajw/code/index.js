@@ -1,34 +1,35 @@
 let url =`https://api.spaceflightnewsapi.net/v3/articles?_limit=30`
-
-//fetch(url).then(res => res.json()).then(news=> console.log(news)) // This console will print news
-
-fetch(url).then(res => res.json()).then(news=>{
-    allNews=news
-    renderNews(news)
-    let allSources = Array.from(new Set(news.map(n=> n.newsSite)))
-    //console.log(allSources)
-    displayOptions(allSources)
-})
-
 let newsElm = document.querySelector(".news")
 
 let select = document.querySelector("select")
 
 let allNews = []
+let main = document.querySelector("section")
+let errorElm =document.querySelector(".error")
 
-/* <div class="flex-50">
-              <img
-                src="https://mk0spaceflightnoa02a.kinstacdn.com/wp-content/uploads/2021/03/50875730681_b4e2d8c6cc_k.jpg"
-                alt=""
-              />
-            </div>
-            <div class="flex-50">
-              <a class="btn btn-pri" href="#">news paper</a>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea,
-                eveniet.
-              </p>
-              <a class="btn btn-sec" href="#">read more</a>*/
+
+function handleError(message = "something went wrong") {
+    main.style.display = "none"
+    errorElm.style.display="block"
+    errorElm.innerText=message
+}
+function handleSpinner(status =false) {
+    let isLoading = false ;
+    if (status) {
+        newsElm.innerHTML = `<div class = "spinner"><div class="donut"></div></div>`
+    }
+   
+}
+
+//fetch(url).then(res => res.json()).then(news=> console.log(news)) // This console will print news
+ 
+
+
+
+
+
+
+/* <div class="donut"></div>*/
 
  
 function renderNews(news) {
@@ -83,7 +84,29 @@ function displayOptions(sources) {
     })
 }
 
+function init() {
+   
+    handleSpinner(true)
+   fetch(url)
+   .then(res => {
+       if(res.ok) {
+           return res.json()
+       }
 
+       else {
+           throw new Error("Response not ok!")
+       }
+   })
+   .then(news=>{
+    
+    handleSpinner()
+       allNews=news
+       renderNews(news)
+       let allSources = Array.from(new Set(news.map(n=> n.newsSite)))
+       //console.log(allSources)
+       displayOptions(allSources)
+   }).catch(error=> handleError(error))
+}
 
 select.addEventListener("change" ,(event)=> {
     // console.log(event.target.value)
@@ -101,3 +124,12 @@ select.addEventListener("change" ,(event)=> {
     renderNews(filterNews)
 
 })
+
+
+if (navigator.onLine) {
+    init()
+}
+
+else {
+    handleError()
+}
