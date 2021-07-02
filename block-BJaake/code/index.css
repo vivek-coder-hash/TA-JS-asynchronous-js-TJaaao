@@ -133,6 +133,12 @@ body {
 .flex {
   display: flex;
 }
+
+.coloumn {
+    flex-direction: column;
+}
+
+
 .flex-50 {
   flex: 0 1 48%;
   margin: 1%;
@@ -185,4 +191,14 @@ strong {
 .btn-sec {
   background-color: black;
   color: white;
+}
+
+
+
+.justify {
+    justify-content: space-between;
+}
+
+.align {
+    align-items: center;
 }
